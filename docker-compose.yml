@@ -1,0 +1,28 @@
+version: '3.4'
+
+networks:
+  services-network:
+    driver: bridge 
+
+services:
+  car:
+    container_name: car
+    image: car:latest
+    depends_on:
+      - "color"
+    build:
+      context: car
+      dockerfile: Dockerfile
+    ports:
+      - "5050:80"
+    networks:
+      - services-network
+  
+  color:
+    container_name: color
+    image: color:latest
+    build:
+      context: color
+      dockerfile: Dockerfile    
+    networks:
+      - services-network
